@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tomat0 - Deteksi Penyakit Daun Tomat</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+
+    <!-- CHART.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      body { font-family: "Inter", sans-serif; }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 8px rgba(0,0,0,0.07);
+        transition: .2s;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+      }
+
+      .fade-in {
+        animation: fadeIn .5s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Spinner Loading */
+      .spinner {
+        border: 4px solid #ddd;
+        border-top: 4px solid #4f46e5;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        animation: spin 0.8s linear infinite;
+        margin: 15px auto;
+        display: none;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-50">
+
+    <!-- HEADER -->
+    <header class="gradient-bg text-white py-3 px-6">
+      <div class="max-w-6xl mx-auto flex items-center gap-3">
+        <img src="logotomat.png" class="w-20" alt="logo">
+        <div>
+          <h1 class="text-3xl font-bold">Tomat0</h1>
+          <p class="text-sm opacity-90">Deteksi Penyakit Tanaman Tomat</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto p-6 mt-8">
+
+      <div class="flex flex-col lg:flex-row gap-8">
+
+        <!-- LEFT -->
+        <div class="card flex-1 p-8 text-center fade-in">
+          <h2 class="text-xl font-semibold text-slate-700 mb-6">Upload Gambar</h2>
+
+          <img id="preview" class="w-full mb-4 rounded-lg hidden" />
+
+          <div class="border-2 border-dashed border-slate-300 rounded-xl p-6 bg-slate-100 hover:bg-slate-200">
+            <p class="text-slate-500 mb-4">Seret atau klik untuk memilih gambar</p>
+
+            <input type="file" accept="image/*" id="fileInput" class="hidden" />
+            <label for="fileInput"
+              class="bg-indigo-600 text-white px-5 py-2 rounded-lg cursor-pointer hover:bg-indigo-800 transition">
+              Pilih Gambar
+            </label>
+          </div>
+
+          <button id="analyzeBtn"
+            class="mt-6 bg-emerald-600 hover:bg-emerald-800 text-white px-6 py-2 rounded-lg transition">
+            Analisis
+          </button>
+
+          <!-- SPINNER LOADING -->
+          <div id="spinner" class="spinner"></div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="flex flex-col gap-6 flex-1">
+
+          <!-- Hasil Analisis -->
+          <div class="card p-10 fade-in">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-500 text-sm">Hasil Analisis</p>
+                <p id="hasil" class="text-3xl font-bold text-slate-800 mt-2">
+                  Belum Ada Data
+                </p>
+              </div>
+              <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                <i class="bi bi-clipboard2-pulse text-indigo-600 text-2xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Akurasi -->
+          <div class="card p-10 fade-in">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-slate-500 text-sm">Akurasi Model</p>
+                <p id="akurasi" class="text-3xl font-bold text-slate-800 mt-2">-</p>
+              </div>
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <i class="bi bi-bullseye text-blue-600 text-2xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grafik Probabilitas -->
+          <div class="card p-8 fade-in">
+            <h3 class="text-lg font-semibold mb-4">Grafik Probabilitas Kelas</h3>
+            <canvas id="chartCanvas" height="200"></canvas>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

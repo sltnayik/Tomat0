@@ -1,0 +1,21 @@
+# Ignore virtual environment
+tfenv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Flask instance folder
+instance/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Env variables
+.env
